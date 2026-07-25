@@ -37,7 +37,7 @@ class _MemoryGameScreenState extends State<MemoryGameScreen> {
       "لعبة الذاكرة الصوتية. "
       "سأقوم بتشغيل سلسلة من الاتجاهات، وعليك تكرارها بالضغط على الشاشة. "
       "الشاشة مقسمة لأربعة أجزاء: أعلى يسار، أعلى يمين، أسفل يسار، وأسفل يمين. "
-      "اضغط مرتين في أي مكان لبدء اللعبة."
+      "اضغط مرتين في أي مكان لبدء اللعبة.",
     );
   }
 
@@ -54,16 +54,16 @@ class _MemoryGameScreenState extends State<MemoryGameScreen> {
   void _nextLevel() async {
     _userInput.clear();
     _sequence.add(Random().nextInt(4));
-    
+
     setState(() => _isPlayingSequence = true);
-    
+
     await Future.delayed(const Duration(seconds: 1));
-    
+
     for (int index in _sequence) {
       await _playQuadrant(index);
       await Future.delayed(const Duration(milliseconds: 600));
     }
-    
+
     setState(() => _isPlayingSequence = false);
     _tts.speak("دورك الآن.");
   }
@@ -71,7 +71,7 @@ class _MemoryGameScreenState extends State<MemoryGameScreen> {
   Future<void> _playQuadrant(int index) async {
     final quadrant = _quadrants[index]!;
     await _tts.speak(quadrant['label']);
-    if (await Vibration.hasVibrator() ?? false) {
+    if (await Vibration.hasVibrator()) {
       Vibration.vibrate(duration: quadrant['vibration']);
     }
   }
@@ -101,7 +101,9 @@ class _MemoryGameScreenState extends State<MemoryGameScreen> {
   }
 
   void _gameOver() {
-    _tts.speak("للأسف، إجابة خاطئة. لقد وصلت للمستوى $_level. اضغط مرتين للبدء من جديد.");
+    _tts.speak(
+      "للأسف، إجابة خاطئة. لقد وصلت للمستوى $_level. اضغط مرتين للبدء من جديد.",
+    );
     setState(() {
       _gameStarted = false;
     });
@@ -123,20 +125,10 @@ class _MemoryGameScreenState extends State<MemoryGameScreen> {
         child: Column(
           children: [
             Expanded(
-              child: Row(
-                children: [
-                  _buildQuadrant(0),
-                  _buildQuadrant(1),
-                ],
-              ),
+              child: Row(children: [_buildQuadrant(0), _buildQuadrant(1)]),
             ),
             Expanded(
-              child: Row(
-                children: [
-                  _buildQuadrant(2),
-                  _buildQuadrant(3),
-                ],
-              ),
+              child: Row(children: [_buildQuadrant(2), _buildQuadrant(3)]),
             ),
           ],
         ),
@@ -161,7 +153,11 @@ class _MemoryGameScreenState extends State<MemoryGameScreen> {
               label: quadrant['label'],
               child: Text(
                 quadrant['label'],
-                style: TextStyle(color: quadrant['color'], fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: quadrant['color'],
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
