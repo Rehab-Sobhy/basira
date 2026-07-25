@@ -45,13 +45,13 @@ class VoiceService {
             onResult(result.recognizedWords, result.finalResult);
           }
         },
-        localeId: localeId,
-        listenFor: const Duration(seconds: 30),
-        pauseFor: const Duration(seconds: 3),
         listenOptions: stt.SpeechListenOptions(
           partialResults: partialResults,
           cancelOnError: true,
           listenMode: stt.ListenMode.dictation,
+          localeId: localeId,
+          listenFor: const Duration(seconds: 30),
+          pauseFor: const Duration(seconds: 3),
         ),
       );
     } else {

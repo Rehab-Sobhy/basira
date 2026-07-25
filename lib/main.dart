@@ -15,7 +15,7 @@ void main() async {
   try {
     await Supabase.initialize(
       url: 'https://elkkyxoneoylempejnjk.supabase.co',
-      anonKey:
+      publishableKey:
           'sb_publishable_6oUCJ4v_ZNYchXxPqU5nag_1gJxY7h2', // TODO: Add your Supabase Anon Key
     );
   } catch (e) {
